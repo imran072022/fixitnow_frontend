@@ -24,6 +24,8 @@ export function ServicesFiltersWrapper({
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [localSearch, setLocalSearch] = useState(currentSearch);
+  const [localMinPrice, setLocalMinPrice] = useState(currentMinPrice);
+  const [localMaxPrice, setLocalMaxPrice] = useState(currentMaxPrice);
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleFilterChange = useCallback(
@@ -45,23 +47,27 @@ export function ServicesFiltersWrapper({
     [router],
   );
 
-  // Debounce search changes
+  // Debounce text and numeric filter changes
   useEffect(() => {
     if (debounceTimerRef.current) {
       clearTimeout(debounceTimerRef.current);
     }
 
     debounceTimerRef.current = setTimeout(() => {
-      if (localSearch !== currentSearch) {
+      if (
+        localSearch !== currentSearch ||
+        localMinPrice !== currentMinPrice ||
+        localMaxPrice !== currentMaxPrice
+      ) {
         handleFilterChange({
           search: localSearch,
           category: currentCategory,
-          minPrice: currentMinPrice,
-          maxPrice: currentMaxPrice,
+          minPrice: localMinPrice,
+          maxPrice: localMaxPrice,
           sort: currentSort,
         });
       }
-    }, 300); // 1 second debounce delay
+    }, 400);
 
     return () => {
       if (debounceTimerRef.current) {
@@ -70,6 +76,8 @@ export function ServicesFiltersWrapper({
     };
   }, [
     localSearch,
+    localMinPrice,
+    localMaxPrice,
     currentSearch,
     currentCategory,
     currentMinPrice,
@@ -93,26 +101,10 @@ export function ServicesFiltersWrapper({
             sort: currentSort,
           })
         }
-        minPrice={currentMinPrice}
-        onMinPriceChange={(value) =>
-          handleFilterChange({
-            search: localSearch,
-            category: currentCategory,
-            minPrice: value,
-            maxPrice: currentMaxPrice,
-            sort: currentSort,
-          })
-        }
-        maxPrice={currentMaxPrice}
-        onMaxPriceChange={(value) =>
-          handleFilterChange({
-            search: localSearch,
-            category: currentCategory,
-            minPrice: currentMinPrice,
-            maxPrice: value,
-            sort: currentSort,
-          })
-        }
+        minPrice={localMinPrice}
+        onMinPriceChange={setLocalMinPrice}
+        maxPrice={localMaxPrice}
+        onMaxPriceChange={setLocalMaxPrice}
         sort={currentSort}
         onSortChange={(value) =>
           handleFilterChange({

@@ -62,7 +62,7 @@ export function TechniciansFiltersWrapper({
           sort: currentSort,
         });
       }
-    }, 300); // 500ms debounce delay
+    }, 400); // 500ms debounce delay
 
     return () => {
       if (debounceTimerRef.current) {
