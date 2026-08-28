@@ -1,4 +1,5 @@
 import {
+  GetTechnicianProfileResponse,
   GetTechniciansResponse,
   TGetTechnicianProfilesQuery,
 } from "../_types/technicians";
@@ -24,6 +25,16 @@ export const getTechnicians = async (
   const res = await fetch(`${API_URL}/technicians?${params.toString()}`);
   if (!res.ok) {
     throw new Error("Failed to fetch technicians");
+  }
+  return res.json();
+};
+
+export const getTechnicianProfile = async (
+  id: string,
+): Promise<GetTechnicianProfileResponse> => {
+  const res = await fetch(`${API_URL}/technicians/${id}`);
+  if (!res.ok) {
+    throw new Error("Failed to fetch technician profile");
   }
   return res.json();
 };

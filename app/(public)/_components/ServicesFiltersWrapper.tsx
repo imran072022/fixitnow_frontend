@@ -1,8 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { ServiceFilters } from "../../_components/ServiceFilters";
 import { useTransition, useState, useEffect, useRef, useCallback } from "react";
+import { ServiceFilters } from "./ServiceFilters";
 
 interface ServicesFiltersWrapperProps {
   categories: string[];

@@ -176,12 +176,18 @@ export function TechnicianFilters({
       </div>
       <div className="flex items-center gap-3 lg:hidden">
         <Sheet>
-          <SheetTrigger>
-            <Button variant="outline" className="flex-1 sm:flex-none">
-              <SlidersHorizontal data-icon="inline-start" />
-              Filters
-            </Button>
-          </SheetTrigger>
+          <SheetTrigger
+            render={(props) => (
+              <Button
+                {...props}
+                variant="outline"
+                className="flex-1 sm:flex-none"
+              >
+                <SlidersHorizontal data-icon="inline-start" />
+                Filters
+              </Button>
+            )}
+          ></SheetTrigger>
           <SheetContent side="bottom" className="rounded-t-2xl">
             <SheetHeader>
               <SheetTitle>Filter technicians</SheetTitle>

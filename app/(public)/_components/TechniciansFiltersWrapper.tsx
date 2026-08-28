@@ -1,8 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { TechnicianFilters } from "../../_components/TechnicianFilters";
+
 import { useTransition, useState, useEffect, useRef, useCallback } from "react";
+import { TechnicianFilters } from "./TechnicianFilters";
 
 interface TechniciansFiltersWrapperProps {
   categories: string[];

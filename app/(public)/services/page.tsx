@@ -1,7 +1,7 @@
 import { getServices } from "../_data/services";
 import { getCategories } from "../_data/categories";
 import { ServiceCard } from "../_components/ServiceCard";
-import { ServicesFiltersWrapper } from "./_components/ServicesFiltersWrapper";
+
 import {
   Pagination,
   PaginationContent,
@@ -11,6 +11,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { ServicesFiltersWrapper } from "../_components/ServicesFiltersWrapper";
 
 interface ServicesPageProps {
   searchParams: Promise<Record<string, string | string[] | undefined>>;

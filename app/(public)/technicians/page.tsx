@@ -1,7 +1,7 @@
 import { getTechnicians } from "../_data/technicians";
 import { getCategories } from "../_data/categories";
 import { TechnicianCard } from "../_components/TechnicianCard";
-import { TechniciansFiltersWrapper } from "./_components/TechniciansFiltersWrapper";
+
 import {
   Pagination,
   PaginationContent,
@@ -11,6 +11,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { TechniciansFiltersWrapper } from "../_components/TechniciansFiltersWrapper";
 
 interface TechniciansPageProps {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
