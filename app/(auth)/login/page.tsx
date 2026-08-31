@@ -47,6 +47,8 @@ export default function LoginPage() {
 
       if (result.success) {
         router.replace("/");
+        router.refresh();
+
         return;
       }
     } catch {

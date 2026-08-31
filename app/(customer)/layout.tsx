@@ -1,8 +1,10 @@
 import React from "react";
 
-const PublicLayout = ({ children }: LayoutProps<"/">) => {
+const CustomerLayout = async ({ children }: LayoutProps<"/">) => {
   return (
     <div className="flex min-h-screen flex-col">
+      {/* Full-width */}
+
       {/* Full-width main background */}
       <main className="flex-1">
         {/* 1280px content area */}
@@ -18,4 +20,4 @@ const PublicLayout = ({ children }: LayoutProps<"/">) => {
   );
 };
 
-export default PublicLayout;
+export default CustomerLayout;
