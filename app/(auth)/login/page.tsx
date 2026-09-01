@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,6 +15,12 @@ export default function LoginPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const registered = searchParams.get("registered");
+  const sessionExpired = searchParams.get("session");
+  useEffect(() => {
+    if (sessionExpired === "expired") {
+      router.refresh();
+    }
+  }, [sessionExpired, router]);
 
   const {
     register,

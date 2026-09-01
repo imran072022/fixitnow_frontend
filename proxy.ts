@@ -8,12 +8,9 @@ export async function proxy(request: NextRequest) {
   if (!accessToken) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
-
   try {
     const { payload } = await jwtVerify(accessToken, accessSecret);
-
     let requiredRole: string;
-
     if (request.nextUrl.pathname.startsWith("/admin")) {
       requiredRole = "ADMIN";
     } else if (request.nextUrl.pathname.startsWith("/technician")) {
@@ -26,10 +23,49 @@ export async function proxy(request: NextRequest) {
     }
     return NextResponse.next();
   } catch {
-    return NextResponse.redirect(new URL("/login", request.url));
+    const refreshToken = request.cookies.get("refreshToken")?.value;
+    if (!refreshToken) {
+      return NextResponse.redirect(
+        new URL("/login?session=expired", request.url),
+      );
+    }
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`,
+      {
+        method: "POST",
+        headers: {
+          Cookie: `refreshToken=${refreshToken}`,
+        },
+      },
+    );
+    if (!response.ok) {
+      return NextResponse.redirect(
+        new URL("/login?session=expired", request.url),
+      );
+    }
+    const setCookie = response.headers.get("set-cookie");
+    const newAccessToken = response.headers
+      .get("set-cookie")
+      ?.match(/accessToken=([^;]+)/)?.[1];
+
+    if (!newAccessToken) {
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
+
+    // Update the request that downstream Next.js code will see.
+    request.cookies.set("accessToken", newAccessToken);
+
+    // Create ONE response object.
+    const nextResponse = NextResponse.next({ request });
+
+    // Update the browser's cookie as well.
+    if (setCookie) {
+      nextResponse.headers.set("set-cookie", setCookie);
+    }
+
+    return nextResponse;
   }
 }
-
 export const config = {
   matcher: ["/admin/:path*", "/technician/:path*", "/customer/:path*"],
 };

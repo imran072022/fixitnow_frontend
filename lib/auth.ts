@@ -2,7 +2,6 @@ import { cookies } from "next/headers";
 
 export async function getCurrentUser() {
   const cookieStore = await cookies();
-  console.log("NEXT COOKIE:", cookieStore.toString());
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
     headers: {
       Cookie: cookieStore.toString(),
@@ -17,4 +16,18 @@ export async function getCurrentUser() {
   }
   const result = await response.json();
   return result.data;
+}
+
+export async function refreshAccessToken() {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`,
+    {
+      method: "POST",
+      credentials: "include",
+    },
+  );
+  if (!response.ok) {
+    return false;
+  }
+  return true;
 }
