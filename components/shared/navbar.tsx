@@ -48,10 +48,23 @@ const publicNavLinks: NavLink[] = [
 ];
 
 const customerNavLinks: NavLink[] = [
+  { label: "Home", href: "/" },
   { label: "Services", href: "/services" },
   { label: "Technicians", href: "/technicians" },
-  { label: "Bookings", href: "/bookings" },
-  { label: "Payments", href: "/payments" },
+  { label: "Bookings", href: "/customer/bookings" },
+  { label: "Payments", href: "/customer/payments" },
+];
+const technicianNavLinks: NavLink[] = [
+  { label: "Home", href: "/" },
+  { label: "Services", href: "/services" },
+  { label: "Technicians", href: "/technicians" },
+  { label: "Manage", href: "/technician/manage" },
+];
+const adminNavLinks: NavLink[] = [
+  { label: "Home", href: "/" },
+  { label: "Services", href: "/services" },
+  { label: "Technicians", href: "/technicians" },
+  { label: "Manage", href: "/admin/manage" },
 ];
 
 // const technicianNavLinks: NavLink[] = [
@@ -86,7 +99,18 @@ export function Navbar({ user }: NavbarProps) {
     ? publicNavLinks
     : user.role === "CUSTOMER"
       ? customerNavLinks
-      : publicNavLinks;
+      : user.role === "TECHNICIAN"
+        ? technicianNavLinks
+        : user.role === "ADMIN"
+          ? adminNavLinks
+          : publicNavLinks;
+
+  const profilePath =
+    user?.role === "TECHNICIAN"
+      ? "/technician/profile"
+      : user?.role === "CUSTOMER"
+        ? "/customer/profile"
+        : "/admin/profile";
 
   const isLoginPage = pathname === "/login";
   const isRegisterPage = pathname === "/register";
@@ -100,6 +124,7 @@ export function Navbar({ user }: NavbarProps) {
   const handleLogout = async () => {
     try {
       await logout();
+      router.replace("/");
       router.refresh();
     } catch (error) {
       console.error(error);
@@ -210,7 +235,7 @@ export function Navbar({ user }: NavbarProps) {
                 <DropdownMenuSeparator />
 
                 <DropdownMenuGroup>
-                  <DropdownMenuItem onClick={() => router.push("/profile")}>
+                  <DropdownMenuItem onClick={() => router.push(profilePath)}>
                     <UserIcon className="size-4" />
                     Profile
                   </DropdownMenuItem>
