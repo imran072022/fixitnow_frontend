@@ -1,16 +1,6 @@
+import { Category, CreateServicePayload } from "../_types/types";
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-export type Category = {
-  id: string;
-  name: string;
-};
-
-export type CreateServicePayload = {
-  categoryId: string;
-  name: string;
-  description: string;
-  price: number;
-};
 
 export const getCategories = async (): Promise<Category[]> => {
   const response = await fetch(`${API_URL}/categories`, {

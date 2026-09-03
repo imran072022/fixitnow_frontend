@@ -25,12 +25,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Category, createService } from "../_data/services";
+import { createService } from "../_data/services";
 import {
   createServiceSchema,
   type CreateServiceFormData,
   type CreateServiceFormInput,
-} from "../_zodSchema/service";
+} from "../_zodSchema/zodSchema";
+import { Category } from "../_types/types";
 
 type CreateServiceModalProps = {
   categories: Category[];

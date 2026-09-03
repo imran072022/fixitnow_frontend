@@ -1,26 +1,9 @@
-// services/availability.api.ts
-
+import { TAvailabilitySlot } from "../_types/types";
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-export enum DayOfWeek {
-  SUNDAY = "SUNDAY",
-  MONDAY = "MONDAY",
-  TUESDAY = "TUESDAY",
-  WEDNESDAY = "WEDNESDAY",
-  THURSDAY = "THURSDAY",
-  FRIDAY = "FRIDAY",
-  SATURDAY = "SATURDAY",
-}
-
-export type TAvailabilitySlot = {
-  dayOfWeek: DayOfWeek;
-  startMinute: number;
-  endMinute: number;
-};
-
 export const setAvailability = async (payload: TAvailabilitySlot) => {
-  const response = await fetch(`${API_URL}/technician/availability`, {
-    method: "PUT",
+  const response = await fetch(`${API_URL}/technicians/me/availability`, {
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
