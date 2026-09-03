@@ -15,13 +15,6 @@ export default function LoginPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const registered = searchParams.get("registered");
-  const sessionExpired = searchParams.get("session");
-  useEffect(() => {
-    if (sessionExpired === "expired") {
-      router.refresh();
-    }
-  }, [sessionExpired, router]);
-
   const {
     register,
     handleSubmit,

@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export async function proxy(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+
   const accessSecret = new TextEncoder().encode(process.env.JWT_ACCESS_SECRET);
   const accessToken = request.cookies.get("accessToken")?.value;
   if (!accessToken) {
@@ -10,24 +12,22 @@ export async function proxy(request: NextRequest) {
   }
   try {
     const { payload } = await jwtVerify(accessToken, accessSecret);
-    let requiredRole: string;
-    if (request.nextUrl.pathname.startsWith("/admin")) {
+    let requiredRole: string | null = null;
+    if (pathname.startsWith("/admin")) {
       requiredRole = "ADMIN";
-    } else if (request.nextUrl.pathname.startsWith("/technician")) {
+    } else if (pathname.startsWith("/technician")) {
       requiredRole = "TECHNICIAN";
-    } else {
+    } else if (pathname.startsWith("/customer")) {
       requiredRole = "CUSTOMER";
     }
-    if (payload.role !== requiredRole) {
+    if (requiredRole && payload.role !== requiredRole) {
       return NextResponse.redirect(new URL("/403", request.url));
     }
     return NextResponse.next();
   } catch {
     const refreshToken = request.cookies.get("refreshToken")?.value;
     if (!refreshToken) {
-      return NextResponse.redirect(
-        new URL("/login?session=expired", request.url),
-      );
+      return NextResponse.redirect(new URL("/login", request.url));
     }
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`,
@@ -39,9 +39,7 @@ export async function proxy(request: NextRequest) {
       },
     );
     if (!response.ok) {
-      return NextResponse.redirect(
-        new URL("/login?session=expired", request.url),
-      );
+      return NextResponse.redirect(new URL("/login", request.url));
     }
     const setCookie = response.headers.get("set-cookie");
     const newAccessToken = response.headers
@@ -67,5 +65,10 @@ export async function proxy(request: NextRequest) {
   }
 }
 export const config = {
-  matcher: ["/admin/:path*", "/technician/:path*", "/customer/:path*"],
+  matcher: [
+    "/profile/:path*",
+    "/admin/:path*",
+    "/technician/:path*",
+    "/customer/:path*",
+  ],
 };

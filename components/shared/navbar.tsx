@@ -67,26 +67,11 @@ const adminNavLinks: NavLink[] = [
   { label: "Manage", href: "/admin/manage" },
 ];
 
-// const technicianNavLinks: NavLink[] = [
-//   { label: "Home", href: "/" },
-//   { label: "Services", href: "/services" },
-//   { label: "Technicians", href: "/technicians" },
-//   { label: "Dashboard", href: "/technician/dashboard" },
-//   { label: "Bookings", href: "/technician/bookings" },
-// ];
-
-// const adminNavLinks: NavLink[] = [
-//   { label: "Home", href: "/" },
-//   { label: "Services", href: "/services" },
-//   { label: "Technicians", href: "/technicians" },
-//   { label: "Dashboard", href: "/admin/dashboard" },
-//   { label: "Users", href: "/admin/users" },
-//   { label: "Categories", href: "/admin/categories" },
-// ];
-
 export function Navbar({ user }: NavbarProps) {
   const pathname = usePathname();
   const router = useRouter();
+  const isAuthPage = pathname === "/login" || pathname === "/register";
+  const currentUser = isAuthPage ? null : user;
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const isActive = (href: string) =>
@@ -95,26 +80,21 @@ export function Navbar({ user }: NavbarProps) {
     setIsMobileMenuOpen(false);
   };
 
-  const navLinks = !user
+  const navLinks = !currentUser
     ? publicNavLinks
-    : user.role === "CUSTOMER"
+    : currentUser.role === "CUSTOMER"
       ? customerNavLinks
-      : user.role === "TECHNICIAN"
+      : currentUser.role === "TECHNICIAN"
         ? technicianNavLinks
-        : user.role === "ADMIN"
+        : currentUser.role === "ADMIN"
           ? adminNavLinks
           : publicNavLinks;
 
-  const profilePath =
-    user?.role === "TECHNICIAN"
-      ? "/technician/profile"
-      : user?.role === "CUSTOMER"
-        ? "/customer/profile"
-        : "/admin/profile";
+  const profilePath = "/profile";
 
   const isLoginPage = pathname === "/login";
   const isRegisterPage = pathname === "/register";
-  const initials = user?.name
+  const initials = currentUser?.name
     ?.split(" ")
     .map((name) => name[0])
     .join("")
@@ -137,7 +117,7 @@ export function Navbar({ user }: NavbarProps) {
         {/* Logo */}
 
         <Link
-          href={user?.role === "CUSTOMER" ? "/services" : "/"}
+          href={currentUser?.role === "CUSTOMER" ? "/services" : "/"}
           className="font-mono text-xl font-semibold tracking-tight text-foreground"
         >
           Learn<span className="text-muted-foreground">/NextJS</span>
@@ -178,7 +158,7 @@ export function Navbar({ user }: NavbarProps) {
           </Button>
 
           {/* Authentication */}
-          {!user && (
+          {!currentUser && (
             <>
               {!isLoginPage && (
                 <Link
@@ -201,9 +181,10 @@ export function Navbar({ user }: NavbarProps) {
           )}
 
           {/* User Menu */}
-          {user && (
+          {currentUser && (
             <DropdownMenu>
               <DropdownMenuTrigger
+                className={"cursor-pointer"}
                 render={<Button variant="ghost" className="h-10 gap-2 px-2" />}
               >
                 <Avatar className="size-7">
@@ -211,7 +192,7 @@ export function Navbar({ user }: NavbarProps) {
                 </Avatar>
 
                 <span className="hidden text-sm font-medium sm:inline">
-                  {user.name}
+                  {currentUser.name}
                 </span>
 
                 <span className="sr-only">Open user menu</span>
@@ -222,11 +203,11 @@ export function Navbar({ user }: NavbarProps) {
                   <DropdownMenuLabel>
                     <div className="flex flex-col">
                       <span className="text-sm font-medium text-foreground">
-                        {user.name}
+                        {currentUser.name}
                       </span>
 
                       <span className="text-xs font-normal text-muted-foreground">
-                        {user.email}
+                        {currentUser.email}
                       </span>
                     </div>
                   </DropdownMenuLabel>
@@ -235,14 +216,12 @@ export function Navbar({ user }: NavbarProps) {
                 <DropdownMenuSeparator />
 
                 <DropdownMenuGroup>
-                  <DropdownMenuItem onClick={() => router.push(profilePath)}>
-                    <UserIcon className="size-4" />
+                  <DropdownMenuItem
+                    className="cursor-pointer"
+                    onClick={() => router.push(profilePath)}
+                  >
+                    <UserIcon className="size-4 " />
                     Profile
-                  </DropdownMenuItem>
-
-                  <DropdownMenuItem onClick={() => router.push("/settings")}>
-                    <SettingsIcon className="size-4" />
-                    Settings
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
 
@@ -250,6 +229,7 @@ export function Navbar({ user }: NavbarProps) {
 
                 <DropdownMenuGroup>
                   <DropdownMenuItem
+                    className={"cursor-pointer"}
                     variant="destructive"
                     onClick={handleLogout}
                   >
