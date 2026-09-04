@@ -8,13 +8,16 @@ import {
   Plane,
   Star,
 } from "lucide-react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 import { TechnicianProfile } from "../../_types/technicians";
+import { CreateBookingModal } from "./CreateBookingModal";
 
 type TechnicianProfileHeaderProps = {
   profile: TechnicianProfile;
@@ -53,7 +56,32 @@ const renderStars = (rating: number) => {
 export function TechnicianProfileHeader({
   profile,
 }: TechnicianProfileHeaderProps) {
+  const [bookingOpen, setBookingOpen] = useState(false);
+  const [checkingAuth, setCheckingAuth] = useState(false);
+  const router = useRouter();
   const initials = getInitials(profile.user.name);
+
+  async function handleBookingClick() {
+    setCheckingAuth(true);
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/me`,
+        { credentials: "include" },
+      );
+
+      if (response.status === 401) {
+        router.push("/login");
+        return;
+      }
+
+      if (response.ok) {
+        setBookingOpen(true);
+      }
+    } finally {
+      setCheckingAuth(false);
+    }
+  }
 
   return (
     <Card className="mb-8 overflow-hidden border-border/70 shadow-sm">
@@ -124,7 +152,8 @@ export function TechnicianProfileHeader({
                 <Button
                   size="lg"
                   className="w-full sm:w-48"
-                  onClick={() => {}}
+                  onClick={handleBookingClick}
+                  disabled={checkingAuth}
                   aria-label={`Book ${profile.user.name}`}
                 >
                   <CalendarClock className="size-4" aria-hidden="true" />
@@ -155,6 +184,12 @@ export function TechnicianProfileHeader({
           </div>
         </div>
       </div>
+      <CreateBookingModal
+        open={bookingOpen}
+        onOpenChange={setBookingOpen}
+        services={profile.services}
+        availabilitySlots={profile.availabilitySlots}
+      />
     </Card>
   );
 }
