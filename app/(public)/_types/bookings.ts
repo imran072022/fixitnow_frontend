@@ -57,6 +57,16 @@ export type BookingTechnicianProfile = {
   user: BookingPerson;
 };
 
+export type BookingReview = {
+  id: string;
+  reviewerId: string;
+  bookingId: string;
+  rating: number;
+  review: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type Booking = {
   id: string;
   customerId: string;
@@ -71,6 +81,7 @@ export type Booking = {
   service?: BookingService;
   technicianProfile?: BookingTechnicianProfile;
   customer?: BookingPerson;
+  review: BookingReview | null;
 };
 
 export type BookingListResponse = {
@@ -94,4 +105,17 @@ export type UpdateBookingStatusResponse = {
   statusCode: number;
   message: string;
   data: Booking;
+};
+
+export type CreateReviewPayload = {
+  bookingId: string;
+  rating: number;
+  review: string;
+};
+
+export type ReviewResponse = {
+  success: boolean;
+  statusCode: number;
+  message: string;
+  data: BookingReview;
 };

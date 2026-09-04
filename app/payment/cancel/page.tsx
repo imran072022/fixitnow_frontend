@@ -21,10 +21,17 @@ export default function PaymentCancel() {
           </p>
         </div>
         <div className="flex flex-col justify-center gap-3 sm:flex-row">
-          <Button render={<Link href="/customer/bookings" />}>
+          <Button
+            nativeButton={false}
+            render={<Link href="/customer/bookings" />}
+          >
             Back to bookings
           </Button>
-          <Button variant="outline" render={<Link href="/" />}>
+          <Button
+            nativeButton={false}
+            variant="outline"
+            render={<Link href="/" />}
+          >
             Back to home
           </Button>
         </div>

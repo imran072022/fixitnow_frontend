@@ -2,6 +2,7 @@ import { BookingSection } from "@/components/shared/BookingCard";
 import {
   activeBookings,
   bookingHistory,
+  requestedBookings,
 } from "@/components/shared/booking-utils";
 
 import { getBookingsServer } from "../../../(public)/_data/bookings.server";
@@ -17,6 +18,11 @@ const ManageBookings = async () => {
           Review platform bookings and their current status.
         </p>
       </div>
+      <BookingSection
+        title="Incoming/Requested bookings"
+        bookings={requestedBookings(bookings)}
+        role="admin"
+      />
       <BookingSection
         title="Active bookings"
         bookings={activeBookings(bookings)}

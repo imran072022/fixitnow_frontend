@@ -15,6 +15,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { ReviewDialog } from "./ReviewDialog";
 
 import {
   createCheckoutSession,
@@ -149,6 +150,7 @@ export function BookingCard({ booking, role, onChanged }: BookingCardProps) {
             <Button
               variant="outline"
               size="sm"
+              nativeButton={false}
               render={
                 <Link href={`/customer/track-booking?id=${booking.id}`} />
               }
@@ -163,6 +165,12 @@ export function BookingCard({ booking, role, onChanged }: BookingCardProps) {
               >
                 {isPaying ? "Redirecting..." : "Pay"}
               </Button>
+            )}
+            {booking.status === "COMPLETED" && (
+              <ReviewDialog
+                bookingId={booking.id}
+                existingReview={booking.review}
+              />
             )}
             {["REQUESTED", "ACCEPTED", "PAID"].includes(booking.status) && (
               <Button

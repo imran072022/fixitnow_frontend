@@ -2,6 +2,7 @@ import { BookingSection } from "@/components/shared/BookingCard";
 import {
   activeBookings,
   bookingHistory,
+  requestedBookings,
 } from "@/components/shared/booking-utils";
 
 import { getBookingsServer } from "../../(public)/_data/bookings.server";
@@ -17,6 +18,11 @@ const Bookings = async () => {
           Track your service requests and appointments.
         </p>
       </div>
+      <BookingSection
+        title="Requested bookings"
+        bookings={requestedBookings(bookings)}
+        role="customer"
+      />
       <BookingSection
         title="Active bookings"
         bookings={activeBookings(bookings)}
