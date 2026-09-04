@@ -1,4 +1,4 @@
-import React from "react";
+import { Footer } from "@/components/shared/Footer";
 
 const PublicLayout = ({ children }: LayoutProps<"/">) => {
   return (
@@ -10,10 +10,7 @@ const PublicLayout = ({ children }: LayoutProps<"/">) => {
       </main>
 
       {/* Full-width */}
-      <footer className="border-t">
-        {/* 1280px footer content */}
-        <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6">Footer</div>
-      </footer>
+      <Footer />
     </div>
   );
 };
