@@ -169,7 +169,6 @@ export function BookingCard({ booking, role, onChanged }: BookingCardProps) {
             {booking.status === "COMPLETED" && (
               <ReviewDialog
                 bookingId={booking.id}
-                existingReview={booking.review}
               />
             )}
             {["REQUESTED", "ACCEPTED", "PAID"].includes(booking.status) && (

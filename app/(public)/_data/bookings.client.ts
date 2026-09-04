@@ -84,7 +84,7 @@ export async function createCheckoutSession(
   return parseResponse<CreateCheckoutSessionResponse>(response);
 }
 
-export async function createOrUpdateReview(
+export async function createReview(
   payload: CreateReviewPayload,
 ): Promise<ReviewResponse> {
   const response = await fetch(REVIEW_ENDPOINT, {

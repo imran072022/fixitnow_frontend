@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Star } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -17,20 +17,13 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { createOrUpdateReview } from "@/app/(public)/_data/bookings.client";
-import type { BookingReview } from "@/app/(public)/_types/bookings";
+import { createReview } from "@/app/(public)/_data/bookings.client";
 import {
   reviewSchema,
   type ReviewFormValues,
 } from "@/app/(public)/_validation/reviewSchema";
 
-export function ReviewDialog({
-  bookingId,
-  existingReview,
-}: {
-  bookingId: string;
-  existingReview: BookingReview | null;
-}) {
+export function ReviewDialog({ bookingId }: { bookingId: string }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -38,30 +31,22 @@ export function ReviewDialog({
     resolver: zodResolver(reviewSchema),
     defaultValues: {
       bookingId,
-      rating: existingReview?.rating ?? 5,
-      review: existingReview?.review ?? "",
+      rating: 5,
+      review: "",
     },
   });
-
-  useEffect(() => {
-    form.reset({
-      bookingId,
-      rating: existingReview?.rating ?? 5,
-      review: existingReview?.review ?? "",
-    });
-  }, [bookingId, existingReview, form]);
 
   async function onSubmit(values: ReviewFormValues) {
     setIsSubmitting(true);
     try {
-      const response = await createOrUpdateReview({
+      const response = await createReview({
         bookingId: values.bookingId,
         rating: values.rating,
         review: values.review.trim(),
       });
       toast.success(response.message);
       setOpen(false);
-      form.reset(values);
+      form.reset({ bookingId, rating: 5, review: "" });
       router.refresh();
     } catch (error) {
       toast.error(
@@ -76,14 +61,12 @@ export function ReviewDialog({
     <>
       <Button variant="outline" size="sm" onClick={() => setOpen(true)}>
         <Star className="size-4" />
-        {existingReview ? "Update review" : "Review"}
+        Review
       </Button>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>
-              {existingReview ? "Update your review" : "Review this service"}
-            </DialogTitle>
+            <DialogTitle>Review this service</DialogTitle>
             <DialogDescription>
               Share your experience with the technician.
             </DialogDescription>
