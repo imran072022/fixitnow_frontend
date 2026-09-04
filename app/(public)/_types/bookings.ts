@@ -24,6 +24,13 @@ export type CreateBookingResponse = {
   data: unknown;
 };
 
+export type CreateCheckoutSessionResponse = {
+  success: boolean;
+  statusCode: number;
+  message: string;
+  data: { checkoutUrl: string | null };
+};
+
 export type BookingPerson = {
   id: string;
   name: string;

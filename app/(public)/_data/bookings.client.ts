@@ -1,6 +1,7 @@
 import type {
   BookingDetailResponse,
   BookingListResponse,
+  CreateCheckoutSessionResponse,
   CreateBookingPayload,
   CreateBookingResponse,
   UpdateBookingStatusPayload,
@@ -8,6 +9,7 @@ import type {
 } from "../_types/bookings";
 
 const ENDPOINT = `${process.env.NEXT_PUBLIC_API_URL}/bookings`;
+const PAYMENT_ENDPOINT = `${process.env.NEXT_PUBLIC_API_URL}/payments/create-checkout-session`;
 
 export async function createBooking(
   payload: CreateBookingPayload,
@@ -65,4 +67,16 @@ export async function updateBookingStatus(
     body: JSON.stringify(payload),
   });
   return parseResponse<UpdateBookingStatusResponse>(response);
+}
+
+export async function createCheckoutSession(
+  bookingId: string,
+): Promise<CreateCheckoutSessionResponse> {
+  const response = await fetch(PAYMENT_ENDPOINT, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ id: bookingId }),
+  });
+  return parseResponse<CreateCheckoutSessionResponse>(response);
 }

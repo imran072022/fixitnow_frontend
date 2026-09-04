@@ -16,7 +16,10 @@ import {
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
-import { updateBookingStatus } from "../../app/(public)/_data/bookings.client";
+import {
+  createCheckoutSession,
+  updateBookingStatus,
+} from "../../app/(public)/_data/bookings.client";
 import type {
   Booking,
   BookingStatus,
@@ -59,6 +62,7 @@ type BookingCardProps = {
 
 export function BookingCard({ booking, role, onChanged }: BookingCardProps) {
   const [isUpdating, setIsUpdating] = useState(false);
+  const [isPaying, setIsPaying] = useState(false);
   const serviceName = booking.service?.name ?? "Service";
   const counterparty =
     role === "customer"
@@ -77,6 +81,22 @@ export function BookingCard({ booking, role, onChanged }: BookingCardProps) {
       );
     } finally {
       setIsUpdating(false);
+    }
+  }
+
+  async function payForBooking() {
+    setIsPaying(true);
+    try {
+      const response = await createCheckoutSession(booking.id);
+      if (!response.data.checkoutUrl) {
+        throw new Error("Unable to start checkout.");
+      }
+      window.location.assign(response.data.checkoutUrl);
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : "Unable to start checkout.",
+      );
+      setIsPaying(false);
     }
   }
 
@@ -138,10 +158,10 @@ export function BookingCard({ booking, role, onChanged }: BookingCardProps) {
             {booking.status === "ACCEPTED" && (
               <Button
                 size="sm"
-                disabled
-                title="Payment integration is not available yet"
+                disabled={isPaying || isUpdating}
+                onClick={payForBooking}
               >
-                Pay
+                {isPaying ? "Redirecting..." : "Pay"}
               </Button>
             )}
             {["REQUESTED", "ACCEPTED", "PAID"].includes(booking.status) && (
