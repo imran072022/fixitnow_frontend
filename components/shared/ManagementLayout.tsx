@@ -24,6 +24,7 @@ const icons = {
   folder: FolderIcon,
   users: UsersIcon,
   notepadText: NotepadText,
+  calendarClock: CalendarDaysIcon,
 };
 
 export type NavLink = {

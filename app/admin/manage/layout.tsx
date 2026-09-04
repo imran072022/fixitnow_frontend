@@ -18,6 +18,11 @@ const adminNavigation: NavLink[] = [
     href: "/admin/manage/categories",
     icon: "folder",
   },
+  {
+    label: "Bookings",
+    href: "/admin/manage/bookings",
+    icon: "calendarClock",
+  },
 ];
 
 export default function AdminManagementLayout({

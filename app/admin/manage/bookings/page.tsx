@@ -1,42 +1,34 @@
 import { BookingSection } from "@/components/shared/BookingCard";
 import {
+  activeBookings,
   bookingHistory,
-  incomingBookings,
-  technicianActiveBookings,
 } from "@/components/shared/booking-utils";
 
 import { getBookingsServer } from "../../../(public)/_data/bookings.server";
 
-const TechnicianBookings = async () => {
+const ManageBookings = async () => {
   const { bookings } = (await getBookingsServer()).data;
 
   return (
     <div className="space-y-10 px-4 py-10 sm:px-6 lg:px-8">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">
-          Technician bookings
-        </h1>
+        <h1 className="text-3xl font-bold tracking-tight">All bookings</h1>
         <p className="mt-2 text-muted-foreground">
-          Review requests and manage your appointments.
+          Review platform bookings and their current status.
         </p>
       </div>
       <BookingSection
-        title="Incoming bookings"
-        bookings={incomingBookings(bookings)}
-        role="technician"
-      />
-      <BookingSection
         title="Active bookings"
-        bookings={technicianActiveBookings(bookings)}
-        role="technician"
+        bookings={activeBookings(bookings)}
+        role="admin"
       />
       <BookingSection
         title="Booking history"
         bookings={bookingHistory(bookings)}
-        role="technician"
+        role="admin"
       />
     </div>
   );
 };
 
-export default TechnicianBookings;
+export default ManageBookings;
