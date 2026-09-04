@@ -120,7 +120,7 @@ export function Navbar({ user }: NavbarProps) {
           href={currentUser?.role === "CUSTOMER" ? "/services" : "/"}
           className="font-mono text-xl font-semibold tracking-tight text-foreground"
         >
-          Learn<span className="text-muted-foreground">/NextJS</span>
+          FixIt<span className="text-muted-foreground">Now</span>
         </Link>
 
         {/* Desktop Navigation */}
