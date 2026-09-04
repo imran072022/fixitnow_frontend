@@ -25,14 +25,17 @@ export default function LoginPage() {
 
   const onSubmit = async (data: TLoginFormData) => {
     try {
-      const response = await fetch(`${process.env.API_URL}/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_NEXT_PUBLIC_API_URL}/auth/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify(data),
         },
-        credentials: "include",
-        body: JSON.stringify(data),
-      });
+      );
 
       const result = await response.json();
 

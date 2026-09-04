@@ -5,7 +5,7 @@ import type {
   BookingListResponse,
 } from "../_types/bookings";
 
-const ENDPOINT = `${process.env.API_URL}/bookings`;
+const ENDPOINT = `${process.env.NEXT_PUBLIC_API_URL}/bookings`;
 
 async function getCookieHeader() {
   return (await cookies()).toString();

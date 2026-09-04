@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 
 import type { PaymentHistoryResponse } from "../_types/payments";
 
-const ENDPOINT = `${process.env.API_URL}/payments`;
+const ENDPOINT = `${process.env.NEXT_PUBLIC_API_URL}/payments`;
 
 export async function getPaymentsServer(): Promise<PaymentHistoryResponse> {
   const response = await fetch(ENDPOINT, {

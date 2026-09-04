@@ -4,7 +4,7 @@ import {
   TGetTechnicianProfilesQuery,
 } from "../_types/technicians";
 
-const API_URL = process.env.API_URL;
+const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const getTechnicians = async (
   query: TGetTechnicianProfilesQuery = {},
@@ -22,7 +22,9 @@ export const getTechnicians = async (
   if (query.page !== undefined) params.append("page", query.page.toString());
   if (query.limit !== undefined) params.append("limit", query.limit.toString());
 
-  const res = await fetch(`${API_URL}/technicians?${params.toString()}`);
+  const res = await fetch(
+    `${NEXT_PUBLIC_API_URL}/technicians?${params.toString()}`,
+  );
   if (!res.ok) {
     throw new Error("Failed to fetch technicians");
   }
@@ -32,7 +34,7 @@ export const getTechnicians = async (
 export const getTechnicianProfile = async (
   id: string,
 ): Promise<GetTechnicianProfileResponse> => {
-  const res = await fetch(`${API_URL}/technicians/${id}`);
+  const res = await fetch(`${NEXT_PUBLIC_API_URL}/technicians/${id}`);
   if (!res.ok) {
     throw new Error("Failed to fetch technician profile");
   }

@@ -4,7 +4,7 @@ import type {
   AvailabilitySlotResponse,
 } from "../_types/availability";
 
-const ENDPOINT = `${process.env.API_URL}/technicians/me/availability`;
+const ENDPOINT = `${process.env.NEXT_PUBLIC_API_URL}/technicians/me/availability`;
 
 export async function createAvailability(payload: AvailabilityPayload) {
   const response = await fetch(ENDPOINT, {

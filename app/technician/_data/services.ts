@@ -1,9 +1,9 @@
 import { Category, CreateServicePayload } from "../_types/types";
 
-const API_URL = process.env.API_URL;
+const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const getCategories = async (): Promise<Category[]> => {
-  const response = await fetch(`${API_URL}/categories`, {
+  const response = await fetch(`${NEXT_PUBLIC_API_URL}/categories`, {
     cache: "no-store",
   });
   const result = await response.json();
@@ -14,7 +14,7 @@ export const getCategories = async (): Promise<Category[]> => {
 };
 
 export const createService = async (payload: CreateServicePayload) => {
-  const response = await fetch(`${API_URL}/services`, {
+  const response = await fetch(`${NEXT_PUBLIC_API_URL}/services`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

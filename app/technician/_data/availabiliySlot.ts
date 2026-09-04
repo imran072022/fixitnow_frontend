@@ -1,15 +1,18 @@
 import { TAvailabilitySlot } from "../_types/types";
-const API_URL = process.env.API_URL;
+const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const setAvailability = async (payload: TAvailabilitySlot) => {
-  const response = await fetch(`${API_URL}/technicians/me/availability`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
+  const response = await fetch(
+    `${NEXT_PUBLIC_API_URL}/technicians/me/availability`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(payload),
     },
-    credentials: "include",
-    body: JSON.stringify(payload),
-  });
+  );
 
   const result = await response.json();
 

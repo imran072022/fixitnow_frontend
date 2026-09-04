@@ -1,6 +1,6 @@
 import { GetServicesResponse, TGetServicesQuery } from "../_types/services";
 
-const API_URL = process.env.API_URL;
+const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const getServices = async (
   query: TGetServicesQuery = {},
@@ -18,7 +18,9 @@ export const getServices = async (
   if (query.page !== undefined) params.append("page", query.page.toString());
   if (query.limit !== undefined) params.append("limit", query.limit.toString());
 
-  const res = await fetch(`${API_URL}/services?${params.toString()}`);
+  const res = await fetch(
+    `${NEXT_PUBLIC_API_URL}/services?${params.toString()}`,
+  );
   if (!res.ok) {
     throw new Error("Failed to fetch services");
   }

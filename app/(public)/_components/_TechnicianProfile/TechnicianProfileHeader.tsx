@@ -65,9 +65,12 @@ export function TechnicianProfileHeader({
     setCheckingAuth(true);
 
     try {
-      const response = await fetch(`${process.env.API_URL}/auth/me`, {
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_NEXT_PUBLIC_API_URL}/auth/me`,
+        {
+          credentials: "include",
+        },
+      );
 
       if (response.status === 401) {
         router.push("/login");

@@ -29,12 +29,15 @@ export async function proxy(request: NextRequest) {
     if (!refreshToken) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
-    const response = await fetch(`${process.env.API_URL}/auth/refresh-token`, {
-      method: "POST",
-      headers: {
-        Cookie: `refreshToken=${refreshToken}`,
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`,
+      {
+        method: "POST",
+        headers: {
+          Cookie: `refreshToken=${refreshToken}`,
+        },
       },
-    });
+    );
     if (!response.ok) {
       return NextResponse.redirect(new URL("/login", request.url));
     }

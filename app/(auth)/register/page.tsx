@@ -41,13 +41,16 @@ export default function RegistrationPage() {
     setServerError("");
 
     try {
-      const response = await fetch(`${process.env.API_URL}/auth/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_NEXT_PUBLIC_API_URL}/auth/register`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
         },
-        body: JSON.stringify(data),
-      });
+      );
 
       const result = await response.json();
       if (result.success) {
@@ -83,8 +86,6 @@ export default function RegistrationPage() {
 
         return;
       }
-
-      console.log("Registration successful:", result);
 
       // Redirect/login logic can be added here.
     } catch (error) {

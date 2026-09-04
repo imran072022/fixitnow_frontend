@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 
 import type { AdminUsersResponse } from "../_types/users";
 
-const ENDPOINT = `${process.env.API_URL}/admin/users`;
+const ENDPOINT = `${process.env.NEXT_PUBLIC_API_URL}/admin/users`;
 
 export async function getAdminUsersServer(): Promise<AdminUsersResponse> {
   const response = await fetch(ENDPOINT, {
