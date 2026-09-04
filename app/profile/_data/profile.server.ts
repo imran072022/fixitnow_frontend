@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 
 import type { Profile, ProfileResponse } from "../_types/profile";
 
-const PROFILE_ENDPOINT = `${process.env.NEXT_PUBLIC_API_URL}/profile/me`;
+const PROFILE_ENDPOINT = `${process.env.API_URL}/profile/me`;
 
 export async function getProfile(): Promise<Profile | null> {
   const cookieStore = await cookies();

@@ -33,7 +33,7 @@ pnpm install
 Create a `.env` file in the project root:
 
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:5000/api
+API_URL=http://localhost:5000/api
 JWT_ACCESS_SECRET=your-access-token-secret
 JWT_REFRESH_SECRET=your-refresh-token-secret
 ```
@@ -108,7 +108,7 @@ proxy.ts                     Authentication refresh and role protection
 
 ## API Integration
 
-The frontend uses the backend API configured by `NEXT_PUBLIC_API_URL`. Server-rendered authenticated requests forward the current request cookies. Client-side mutations use `credentials: "include"`.
+The frontend uses the backend API configured by `API_URL`. Server-rendered authenticated requests forward the current request cookies. Client-side mutations use `credentials: "include"`.
 
 The full endpoint-to-component map is available in [API_INTEGRATION.md](API_INTEGRATION.md).
 

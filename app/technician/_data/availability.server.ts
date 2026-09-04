@@ -5,7 +5,7 @@ import type {
   AvailabilitySlot,
 } from "../_types/availability";
 
-const ENDPOINT = `${process.env.NEXT_PUBLIC_API_URL}/technicians/me/availability`;
+const ENDPOINT = `${process.env.API_URL}/technicians/me/availability`;
 
 export async function getMyAvailability(): Promise<AvailabilitySlot[]> {
   const cookieStore = await cookies();

@@ -3,7 +3,7 @@ import type {
   GetCategoriesResponse,
 } from "@/app/(public)/_types/categories";
 
-const ENDPOINT = `${process.env.NEXT_PUBLIC_API_URL}/categories`;
+const ENDPOINT = `${process.env.API_URL}/categories`;
 
 type CategoryMutationResponse = {
   success: boolean;

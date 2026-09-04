@@ -1,6 +1,6 @@
 import { Category, CreateServicePayload } from "../_types/types";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL = process.env.API_URL;
 
 export const getCategories = async (): Promise<Category[]> => {
   const response = await fetch(`${API_URL}/categories`, {

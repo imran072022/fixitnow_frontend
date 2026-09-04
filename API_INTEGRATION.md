@@ -7,7 +7,7 @@ This document maps the FixItNow frontend features to the backend API endpoints t
 The frontend builds API URLs from:
 
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:5000/api
+API_URL=http://localhost:5000/api
 ```
 
 Authenticated requests use the browser cookies through `credentials: "include"` on client requests or forward the request cookie from `next/headers` on server requests.

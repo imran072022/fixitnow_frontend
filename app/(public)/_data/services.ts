@@ -1,6 +1,6 @@
 import { GetServicesResponse, TGetServicesQuery } from "../_types/services";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL = process.env.API_URL;
 
 export const getServices = async (
   query: TGetServicesQuery = {},

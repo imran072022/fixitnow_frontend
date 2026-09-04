@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 
 export async function getCurrentUser() {
   const cookieStore = await cookies();
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
+  const response = await fetch(`${process.env.API_URL}/auth/me`, {
     headers: {
       Cookie: cookieStore.toString(),
     },
@@ -19,13 +19,10 @@ export async function getCurrentUser() {
 }
 
 export async function refreshAccessToken() {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`,
-    {
-      method: "POST",
-      credentials: "include",
-    },
-  );
+  const response = await fetch(`${process.env.API_URL}/auth/refresh-token`, {
+    method: "POST",
+    credentials: "include",
+  });
   if (!response.ok) {
     return false;
   }
