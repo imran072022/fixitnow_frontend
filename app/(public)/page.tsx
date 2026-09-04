@@ -54,7 +54,7 @@ const PublicHomePage = async () => {
         </div>
       </section>
 
-      <section className="px-4 py-20 sm:px-6 lg:py-24">
+      <section className="px-4 py-20 sm:px-6 lg:py-24 bg-white">
         <div className="mx-auto max-w-7xl">
           <SectionHeading
             eyebrow="What you need"
@@ -92,7 +92,7 @@ const PublicHomePage = async () => {
         </div>
       </section>
 
-      <section className="px-4 py-20 sm:px-6 lg:py-24">
+      <section className="px-4 py-20 sm:px-6 lg:py-24 bg-white">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
             About FixItNow

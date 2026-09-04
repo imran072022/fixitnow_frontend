@@ -51,7 +51,7 @@ export default function ManagementLayout({
   return (
     <div className="flex min-h-[calc(100vh-4rem)] flex-col md:flex-row">
       {/* Mobile Management Navigation */}
-      <div className="sticky top-16 z-30 border-b bg-background md:hidden">
+      <div className="sticky top-0 z-30 border-b bg-background md:hidden">
         <div className="flex h-12 items-center gap-1 overflow-x-auto px-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {navigation.map((item) => {
             const Icon = icons[item.icon];
@@ -161,8 +161,8 @@ export default function ManagementLayout({
       </aside>
 
       {/* Main Content */}
-      <main className="min-w-0 flex-1">
-        <div className="mx-auto w-full max-w-7xl p-4 sm:p-6 lg:p-8">
+      <main className="min-w-0 flex-1 bg-gradient-to-r from-blue-50 to-red-50">
+        <div className="mx-auto min-h-[calc(100vh-4rem)] w-full max-w-7xl p-4 sm:p-6 lg:p-8">
           {children}
         </div>
       </main>

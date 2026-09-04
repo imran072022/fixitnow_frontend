@@ -45,7 +45,7 @@ export function UsersList({ initialUsers }: { initialUsers: AdminUser[] }) {
       {users.map((user) => (
         <div
           key={user.id}
-          className="grid gap-3 px-4 py-3 sm:grid-cols-[minmax(0,1fr)_auto_auto] sm:items-center"
+          className="grid gap-3 px-4 py-3 sm:grid-cols-[minmax(0,1fr)_auto_auto] sm:items-center bg-white "
         >
           <div className="min-w-0">
             <p className="truncate font-medium">{user.name}</p>

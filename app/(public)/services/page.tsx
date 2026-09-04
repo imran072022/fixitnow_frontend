@@ -66,7 +66,7 @@ const Services = async ({ searchParams }: ServicesPageProps) => {
   }
 
   return (
-    <main className="bg-blue-50 px-4 py-24">
+    <main className=" px-4 py-24">
       <h2 className="mb-8 text-center text-3xl font-bold">
         Browse All Services
       </h2>

@@ -29,8 +29,10 @@ export default function TechnicianManagementLayout({
   children,
 }: LayoutProps<"/technician/manage">) {
   return (
-    <ManagementLayout navigation={technicianNavigation}>
-      {children}
-    </ManagementLayout>
+    <div className="min-h-full bg-gradient-to-r from-blue-50 to-red-50">
+      <ManagementLayout navigation={technicianNavigation}>
+        {children}
+      </ManagementLayout>
+    </div>
   );
 }

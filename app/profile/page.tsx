@@ -11,7 +11,7 @@ export default async function ProfilePage() {
   }
 
   return (
-    <div className="bg-gray-50">
+    <div className="max-w-7xl mx-auto ">
       <ProfileForm profile={profile} />
     </div>
   );
