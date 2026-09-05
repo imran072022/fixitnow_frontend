@@ -24,6 +24,7 @@ export default function LoginPage() {
   });
 
   const onSubmit = async (data: TLoginFormData) => {
+    console.log("LOGIN onSubmit RUNNING");
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
@@ -38,6 +39,7 @@ export default function LoginPage() {
       );
 
       const result = await response.json();
+      console.log("2: response", response.status, result);
 
       if (!response.ok) {
         setServerError(result.message || "Login failed. Please try again.");
@@ -45,6 +47,7 @@ export default function LoginPage() {
       }
 
       if (result.success) {
+        console.log("LOGIN SUCCESS — ABOUT TO NAVIGATE");
         router.replace("/");
         router.refresh();
 
