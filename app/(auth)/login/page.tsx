@@ -48,8 +48,14 @@ export default function LoginPage() {
 
       if (result.success) {
         console.log("LOGIN SUCCESS — ABOUT TO NAVIGATE");
+
         router.replace("/");
+
+        console.log("AFTER router.replace");
+
         router.refresh();
+
+        console.log("AFTER router.refresh");
 
         return;
       }
