@@ -1,7 +1,5 @@
 import { GetServicesResponse, TGetServicesQuery } from "../_types/services";
 
-const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL;
-
 export const getServices = async (
   query: TGetServicesQuery = {},
 ): Promise<GetServicesResponse> => {
@@ -19,7 +17,7 @@ export const getServices = async (
   if (query.limit !== undefined) params.append("limit", query.limit.toString());
 
   const res = await fetch(
-    `${NEXT_PUBLIC_API_URL}/services?${params.toString()}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/services?${params.toString()}`,
   );
   if (!res.ok) {
     throw new Error("Failed to fetch services");

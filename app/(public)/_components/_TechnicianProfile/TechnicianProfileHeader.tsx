@@ -66,7 +66,7 @@ export function TechnicianProfileHeader({
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_NEXT_PUBLIC_API_URL}/auth/me`,
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/me`,
         {
           credentials: "include",
         },
