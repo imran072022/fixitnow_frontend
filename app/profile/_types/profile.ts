@@ -23,12 +23,13 @@ export const profileSchema = z.object({
 
   dob: z
     .string()
-    .refine((value) => value !== "", "Date of birth is required.")
     .refine((value) => {
+      if (value === "") return true;
       const date = new Date(`${value}T00:00:00.000Z`);
       return !Number.isNaN(date.getTime());
     }, "Invalid date of birth.")
     .refine((value) => {
+      if (value === "") return true;
       const date = new Date(`${value}T00:00:00.000Z`);
       return date <= new Date();
     }, "Date of birth cannot be in the future."),
@@ -47,6 +48,18 @@ export const profileSchema = z.object({
       "Experience must be a whole number between 0 and 80.",
     ),
 });
+
+export const technicianProfileSchema = profileSchema.superRefine(
+  (values, context) => {
+    if (values.dob === "") {
+      context.addIssue({
+        code: "custom",
+        path: ["dob"],
+        message: "Date of birth is required.",
+      });
+    }
+  },
+);
 
 export type ProfileRole = "CUSTOMER" | "TECHNICIAN" | "ADMIN";
 

@@ -1,6 +1,6 @@
 import type { ProfileResponse, UpdateProfilePayload } from "../_types/profile";
 
-const PROFILE_ENDPOINT = `${process.env.NEXT_PUBLIC_API_URL}/profile/me`;
+const PROFILE_ENDPOINT = "/api/backend/profile/me";
 
 type ProfileApiErrorItem = {
   field: string;

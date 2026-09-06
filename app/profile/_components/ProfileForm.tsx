@@ -20,10 +20,12 @@ import { Input } from "@/components/ui/input";
 import { ProfileApiError, updateProfile } from "../_data/profile.client";
 import {
   profileSchema,
+  technicianProfileSchema,
   type Profile,
   type ProfileFormValues,
 } from "../_types/profile";
 import { useState } from "react";
+import { toast } from "sonner";
 
 type ProfileFormProps = {
   profile: Profile;
@@ -58,6 +60,7 @@ function getDefaultValues(profile: Profile): ProfileFormValues {
 
 export function ProfileForm({ profile }: ProfileFormProps) {
   const [serverError, setServerError] = useState("");
+  const isTechnician = profile.role === "TECHNICIAN";
 
   const {
     register,
@@ -67,11 +70,11 @@ export function ProfileForm({ profile }: ProfileFormProps) {
     control,
     formState: { errors, isSubmitting },
   } = useForm<ProfileFormValues>({
-    resolver: zodResolver(profileSchema),
+    resolver: zodResolver(
+      isTechnician ? technicianProfileSchema : profileSchema,
+    ),
     defaultValues: getDefaultValues(profile),
   });
-
-  const isTechnician = profile.role === "TECHNICIAN";
 
   const onSubmit = async (values: ProfileFormValues) => {
     setServerError("");
@@ -97,6 +100,7 @@ export function ProfileForm({ profile }: ProfileFormProps) {
             }
           : {}),
       });
+      toast.success("Profile updated successfully.");
 
       reset(getDefaultValues(result.data));
     } catch (error) {
@@ -115,14 +119,12 @@ export function ProfileForm({ profile }: ProfileFormProps) {
             }
           });
         }
-
+        toast.error(error.message || "Failed to update profile.");
         if (!hasFieldError) {
           setServerError(error.message);
         }
-
         return;
       }
-
       setServerError(
         error instanceof Error ? error.message : "Unable to update profile.",
       );

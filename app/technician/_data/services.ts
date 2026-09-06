@@ -14,7 +14,7 @@ export const getCategories = async (): Promise<Category[]> => {
 };
 
 export const createService = async (payload: CreateServicePayload) => {
-  const response = await fetch(`${NEXT_PUBLIC_API_URL}/services`, {
+  const response = await fetch("/api/backend/services", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -10,9 +10,9 @@ import type {
   UpdateBookingStatusResponse,
 } from "../_types/bookings";
 
-const ENDPOINT = `${process.env.NEXT_PUBLIC_API_URL}/bookings`;
-const PAYMENT_ENDPOINT = `${process.env.NEXT_PUBLIC_API_URL}/payments/create-checkout-session`;
-const REVIEW_ENDPOINT = `${process.env.NEXT_PUBLIC_API_URL}/reviews`;
+const ENDPOINT = "/api/backend/bookings";
+const PAYMENT_ENDPOINT = "/api/backend/payments/create-checkout-session";
+const REVIEW_ENDPOINT = "/api/backend/reviews";
 
 export async function createBooking(
   payload: CreateBookingPayload,

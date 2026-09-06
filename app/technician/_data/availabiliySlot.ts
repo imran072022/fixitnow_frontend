@@ -1,9 +1,8 @@
 import { TAvailabilitySlot } from "../_types/types";
-const NEXT_PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const setAvailability = async (payload: TAvailabilitySlot) => {
   const response = await fetch(
-    `${NEXT_PUBLIC_API_URL}/technicians/me/availability`,
+    "/api/backend/technicians/me/availability",
     {
       method: "POST",
       headers: {

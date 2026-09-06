@@ -1,6 +1,6 @@
 import type { AdminUserStatus, AdminUsersResponse } from "../_types/users";
 
-const ENDPOINT = `${process.env.NEXT_PUBLIC_API_URL}/admin/users`;
+const ENDPOINT = "/api/backend/admin/users";
 
 type UserStatusResponse = {
   success: boolean;
