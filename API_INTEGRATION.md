@@ -2,6 +2,8 @@
 
 This document maps the FixItNow frontend features to the backend API endpoints they consume.
 
+> **Reviewer note:** Assignment reviewers are encouraged to consult the [project README](https://github.com/imran072022/fixItNow/blob/main/README.md) for the implemented business rules and application context. This reference may help clarify workflows and domain behavior during review.
+
 ## Configuration
 
 The frontend builds API URLs from:

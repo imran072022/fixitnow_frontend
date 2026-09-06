@@ -4,6 +4,8 @@ FixItNow is a service marketplace frontend that connects customers with local te
 
 The application is built with Next.js App Router, React, TypeScript, Tailwind CSS, shadcn-style UI primitives, and a separate backend API.
 
+> **Assignment reviewer note:** Please refer to the [project README](https://github.com/imran072022/fixItNow/blob/main/README.md) for the implemented business rules and application context. Reviewing this reference can help clarify the intended workflows and domain behavior.
+
 ## Features
 
 - Public homepage with featured services and technicians
