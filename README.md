@@ -108,7 +108,13 @@ proxy.ts                     Authentication refresh and role protection
 
 ## API Integration
 
-The frontend uses the backend API configured by `NEXT_PUBLIC_API_URL`. Server-rendered authenticated requests forward the current request cookies. Client-side mutations use `credentials: "include"`.
+The frontend uses the backend API configured by `NEXT_PUBLIC_API_URL`. Browser authentication and authenticated client-side API calls use the same-origin Next.js BFF:
+
+- `POST /api/auth/login` forwards credentials to Railway and sets frontend-domain HttpOnly `accessToken` and `refreshToken` cookies.
+- `POST /api/auth/logout` forwards the frontend cookies to Railway and clears both frontend cookies.
+- `/api/backend/*` forwards authenticated browser requests and the frontend cookie header to the matching Railway endpoint.
+
+Server-rendered authenticated helpers continue to call Railway directly with an explicit `Cookie` header created from Next.js `cookies()`. This keeps RootLayout authentication server-side without an unnecessary extra BFF request.
 
 The full endpoint-to-component map is available in [API_INTEGRATION.md](API_INTEGRATION.md).
 
@@ -125,7 +131,9 @@ Most endpoints use this response format:
 
 ## Authentication And Authorization
 
-Authentication is cookie-based. The root layout loads the current user from `/auth/me`. `proxy.ts` protects profile, customer, technician, and administrator routes by validating the access token and refreshing it when necessary.
+Authentication is cookie-based. The root layout loads the current user from Railway `/auth/me` during server rendering and explicitly forwards the frontend-domain cookies. Browser login and logout are handled by Next.js BFF routes. `proxy.ts` protects profile, customer, technician, and administrator routes by validating the frontend-domain access token and refreshing it through Railway when necessary.
+
+The frontend owns the browser cookies. Railway remains responsible for JWT creation, authentication middleware, authorization, and user lookup. Railway `Set-Cookie` headers are not copied directly to the browser because they belong to the Railway domain.
 
 Role restrictions are applied as follows:
 
@@ -134,6 +142,19 @@ Role restrictions are applied as follows:
 - `ADMIN` can access `/admin/*`
 
 Unauthenticated users are redirected to `/login`, and authenticated users without the required role are redirected to `/403`.
+
+## BFF Routes
+
+```text
+app/api/
+  auth/
+    login/route.ts       Browser login and frontend cookie creation
+    logout/route.ts      Backend logout and frontend cookie clearing
+  backend/
+    [...path]/route.ts   Authenticated browser API forwarding
+```
+
+The generic backend route supports `GET`, `POST`, `PUT`, `PATCH`, and `DELETE`. It forwards the request method, query string, `Content-Type`, request body where applicable, and frontend cookies. It deliberately does not forward host, content-length, connection-specific, or internal Next.js headers.
 
 ## Development Notes
 
